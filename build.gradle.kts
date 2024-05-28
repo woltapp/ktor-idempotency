@@ -2,6 +2,8 @@ plugins {
     kotlin("jvm") version "1.9.21"
     kotlin("plugin.serialization") version "1.9.23"
     id("com.diffplug.spotless") version "6.25.0"
+    id("maven-publish")
+    id("signing")
 }
 
 group = "com.wolt"
@@ -9,6 +11,11 @@ group = "com.wolt"
 version = "1.0-SNAPSHOT"
 
 repositories { mavenCentral() }
+
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
 
 dependencies {
     val ktorVersion = "2.3.9"
@@ -36,4 +43,62 @@ spotless {
         ktlint()
     }
     kotlinGradle { ktfmt("0.47").kotlinlangStyle() }
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            from(components["kotlin"])
+            groupId = project.group.toString()
+            artifactId = project.name
+            version = project.version.toString()
+            artifact(tasks.kotlinSourcesJar)
+            artifact(tasks.named("javadocJar"))
+
+            pom {
+                name.set("Ktor Idempotency Plugin")
+                description.set("A Ktor plugin for handling idempotency in HTTP requests")
+                url.set("https://github.com/woltapp/ktor-idempotency")
+
+                name.set("Your Project Name")
+                description.set("A description of your project")
+                url.set("https://your.project.url")
+                licenses {
+                    license {
+                        name.set("The MIT License")
+                        url.set("https://github.com/woltapp/ktor-idempotency/blob/main/LICENSE")
+                    }
+                }
+                developers {
+                    developer {
+                        id.set("muatik")
+                        name.set("Mustafa Atik")
+                        email.set("mustafa.atik@wolt.com")
+                    }
+                }
+                scm {
+                    connection.set("scm:git:https://github.com/woltapp/ktor-idempotency.git")
+                    developerConnection.set(
+                        "scm:git:https://github.com/woltapp/ktor-idempotency.git"
+                    )
+                    url.set("https://github.com/woltapp/ktor-idempotency")
+                }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            name = "sonatype"
+            url = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
+            credentials(PasswordCredentials::class)
+        }
+    }
+}
+
+signing {
+    val signingKey: String? by project
+    val signingPassword: String? by project
+    useInMemoryPgpKeys(signingKey, signingPassword)
+    sign(publishing.publications["mavenJava"])
 }
