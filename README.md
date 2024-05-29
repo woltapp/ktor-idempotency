@@ -160,4 +160,4 @@ install(IdempotencyPlugin) {
 ```
 
 ##### Initial contributors
-@muatik & @nualn
+[@muatik](https://github.com/muatik) & [@nualn](https://github.com/nualn)
