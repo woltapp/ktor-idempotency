@@ -1,6 +1,6 @@
 plugins {
     kotlin("jvm") version "1.9.21"
-    kotlin("plugin.serialization") version "1.9.23"
+    kotlin("plugin.serialization") version "2.0.0"
     id("com.diffplug.spotless") version "6.25.0"
     id("maven-publish")
     id("signing")
