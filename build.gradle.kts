@@ -24,7 +24,7 @@ dependencies {
     implementation("io.ktor:ktor-server-content-negotiation:${ktorVersion}")
     implementation("io.ktor:ktor-serialization-kotlinx-json:${ktorVersion}")
 
-    implementation("io.github.oshai:kotlin-logging-jvm:5.1.0")
+    implementation("io.github.oshai:kotlin-logging-jvm:6.0.9")
 
     testImplementation("io.ktor:ktor-server-status-pages:2.3.11")
     testImplementation("io.ktor:ktor-server-test-host:${ktorVersion}")
