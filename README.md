@@ -2,16 +2,17 @@
 
 A Ktor library to handle idempotency checks for HTTP requests. It ensures the same request isn’t processed twice, but the client always gets the same result as the first request.
 
-Why use it?
+### Why use it?
 * TL;DR: For safe API retries.
 * In distributed systems, retrying requests is common, especially after errors.
 * Example: If a service consuming Kafka events makes an HTTP request to another service to deduct money, a connection error might leave the balance update uncertain. Retrying the event can be safe if the balance service supports idempotency, preventing multiple deductions.
 
 
-How does it work?
+### How does it work?
 * **Idempotency Support**: Saves the response of a request using an idempotency key, returning the saved response for repeated requests with the same key.
 * **Parallel requests**: If a second request with the same key arrives while the first request is still being processed, responds with status code 409. The request can be safely retried to get the saved response for the first request.
 * **Response Expiry**: Configurable TTL to manage cache size. Adjust TTL based on storage size and risk of key collision.
+* **Delete Expired Responses**: Periodically deletes expired responses to free up storage space.
 * **Request Parameters**: Checks idempotency key, HTTP method, and path. Allows using the same key for different paths (e.g., /api/v1/accounts, /api/v1/purchases/{purchase-id}/delivery).
 * **Idempotency Key**: Clients should use UUIDs to avoid collisions and ensure randomness.
 * **HTTP GET**: Responses are ignored by default but can be included in the configuration, so idempotency checks for GET requests are skipped.
@@ -157,3 +158,6 @@ install(IdempotencyPlugin) {
     }
 }
 ```
+
+##### Initial contributors
+@muatik & @nualn
