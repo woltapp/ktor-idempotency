@@ -70,7 +70,7 @@ private suspend fun interceptRequest(
     pluginConfig: PluginConfiguration,
     responseRepository: IdempotentResponseRepository,
 ) {
-    logger.info { "Intercepting request: ${call.request.httpMethod} ${call.request.uri}" }
+    logger.debug { "Intercepting request: ${call.request.httpMethod} ${call.request.uri}" }
     call.attributes.put(PluginConfiguration.attributeKey, false)
     if (call.request.httpMethod !in pluginConfig.idempotentHttpMethods) {
         return
