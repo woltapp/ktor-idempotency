@@ -47,13 +47,9 @@ spotless {
     kotlinGradle { ktfmt("0.47").kotlinlangStyle() }
 }
 
-tasks{
-    compileKotlin {
-        kotlinOptions.jvmTarget = "11"
-    }
-    compileTestKotlin {
-        kotlinOptions.jvmTarget = "11"
-    }
+tasks {
+    compileKotlin { kotlinOptions.jvmTarget = "11" }
+    compileTestKotlin { kotlinOptions.jvmTarget = "11" }
 }
 
 publishing {
