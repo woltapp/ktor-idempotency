@@ -8,8 +8,6 @@ plugins {
 
 group = "com.wolt"
 
-version = "1.0-SNAPSHOT"
-
 repositories { mavenCentral() }
 
 java {
