@@ -60,9 +60,6 @@ publishing {
                 description.set("A Ktor plugin for handling idempotency in HTTP requests")
                 url.set("https://github.com/woltapp/ktor-idempotency")
 
-                name.set("Your Project Name")
-                description.set("A description of your project")
-                url.set("https://your.project.url")
                 licenses {
                     license {
                         name.set("The MIT License")
