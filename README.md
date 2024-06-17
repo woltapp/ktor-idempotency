@@ -160,8 +160,12 @@ install(IdempotencyPlugin) {
 ```
 
 ##### Initial contributors
-[@muatik](https://github.com/muatik) & [@nualn](https://github.com/nualn)
+* [@muatik](https://github.com/muatik)
+* [@nualn](https://github.com/nualn)
+* [@diastremskii](https://github.com/diastremskii)
 
+## Contributing
+Just create a pull request. We will review it and merge it if it is good to go. If you are not sure about the changes, you can create an issue to discuss it first.
 
 ## Releasing
 
