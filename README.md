@@ -161,3 +161,15 @@ install(IdempotencyPlugin) {
 
 ##### Initial contributors
 [@muatik](https://github.com/muatik) & [@nualn](https://github.com/nualn)
+
+
+## Releasing
+
+1. [Draft a new release](https://github.com/woltapp/ktor-idempotency/releases/new) on GitHub.
+2. Create a new tag (e.g. `v0.1.1` if the previous was `v0.1.0` and you want to bump the patch version).
+3. Auto-generate release notes.
+4. Publish the release.
+5. This will trigger a CI workflow to build and publish the library to Sonatype Nexus. You can see it [here](https://github.com/woltapp/ktor-idempotency/actions). After publishing succeeds, login to [Sonatype Nexus](https://oss.sonatype.org/) and select "Staging repositories".
+6. Check the content of the new entry.
+7. If there are no issues, press "Close". It will run the checks required for sync with Maven Central. If there are issues, press "Drop".
+8. Press "Release" to sync with Maven Central (Or "Drop" if there are problems with content/checks).
