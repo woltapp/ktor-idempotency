@@ -59,21 +59,39 @@ fun Application.module() {
 }
 
 
-class InMemoryIdempotentResponseRepository : IdempotentResponseRepository {
-    private val responses = mutableMapOf<String, ByteArray>()
+class InMemoryResponseRepository : IdempotentResponseRepository {
+    private val responses = ConcurrentHashMap<String, IdempotencyResponse>()
 
-    override fun storeResponse(resource: String, idempotencyKey: IdempotencyKey, response: ByteArray) {
-        responses["$resource:$idempotencyKey"] = response
+    override fun storeResponse(
+        resource: String,
+        idempotencyKey: IdempotencyKey,
+        response: ByteArray,
+    ) {
+        println("Storing response for idempotent request: $idempotencyKey")
+        responses[generateKey(resource, idempotencyKey)] = IdempotencyResponse(isInProgress = false, response = response)
     }
 
-    override fun getResponse(resource: String, idempotencyKey: IdempotencyKey): ByteArray? {
-        return responses["$resource:$idempotencyKey"]
+    override fun getResponseOrLock(
+        resource: String,
+        idempotencyKey: IdempotencyKey,
+    ): IdempotencyResponse? {
+        println("Retrieving response for idempotent request: $idempotencyKey")
+        val record =
+            responses.putIfAbsent(
+                generateKey(resource, idempotencyKey),
+                IdempotencyResponse(isInProgress = true, response = ByteArray(0)),
+            )
+        return record
     }
-    override fun deleteExpiredResponses(lastValidDate: OffsetDateTime) {
-        // delete expired responses that are older than lastValidDate
-        // for the testing purpose, you could also delete all the responses
+
+    override fun deleteExpiredResponses(lastValidDate: java.time.OffsetDateTime) {
         responses.clear()
     }
+
+    private fun generateKey(
+        resource: String,
+        idempotencyKey: IdempotencyKey,
+    ) = "$resource:$idempotencyKey"
 }
 
 ```
