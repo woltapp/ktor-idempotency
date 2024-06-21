@@ -26,7 +26,7 @@ dependencies {
 
     implementation("io.github.oshai:kotlin-logging-jvm:6.0.9")
 
-    testImplementation("io.ktor:ktor-server-status-pages:2.3.11")
+    testImplementation("io.ktor:ktor-server-status-pages:2.3.12")
     testImplementation("io.ktor:ktor-server-test-host:${ktorVersion}")
 
     testImplementation("io.mockk:mockk:1.13.11")
