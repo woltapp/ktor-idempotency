@@ -31,13 +31,15 @@ val IdempotencyPlugin =
             pluginConfig.idempotentResponseRepository
                 ?: throw IllegalArgumentException("IdempotentRequestRepository must be provided")
 
-        CleanUpWorker(
-            scope = pluginConfig.cleanUpWorkerScope,
-            jitter = pluginConfig.cleanUpWorkerJitter,
-            interval = pluginConfig.cleanUpWorkerInterval,
-            idempotentResponseRepository = responseRepository,
-            storedResponseTTL = pluginConfig.storedResponseTTL,
-        ).start()
+        if (pluginConfig.cleanUpWorkerEnabled) {
+            CleanUpWorker(
+                scope = pluginConfig.cleanUpWorkerScope,
+                jitter = pluginConfig.cleanUpWorkerJitter,
+                interval = pluginConfig.cleanUpWorkerInterval,
+                idempotentResponseRepository = responseRepository,
+                storedResponseTTL = pluginConfig.storedResponseTTL,
+            ).start()
+        }
 
         val logger = KotlinLogging.logger {}
 
