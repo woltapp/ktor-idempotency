@@ -5,18 +5,18 @@ import kotlinx.serialization.Serializable
 import java.time.OffsetDateTime
 
 interface IdempotentResponseRepository {
-    fun storeResponse(
+    suspend fun storeResponse(
         resource: String,
         idempotencyKey: IdempotencyKey,
         response: ByteArray,
     )
 
-    fun getResponseOrLock(
+    suspend fun getResponseOrLock(
         resource: String,
         idempotencyKey: IdempotencyKey,
     ): IdempotencyResponse?
 
-    fun deleteExpiredResponses(lastValidDate: OffsetDateTime)
+    suspend fun deleteExpiredResponses(lastValidDate: OffsetDateTime)
 }
 
 data class IdempotencyResponse(

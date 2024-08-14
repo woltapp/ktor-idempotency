@@ -8,7 +8,7 @@ import java.util.concurrent.ConcurrentHashMap
 class InMemoryResponseRepository : IdempotentResponseRepository {
     private val responses = ConcurrentHashMap<String, IdempotencyResponse>()
 
-    override fun storeResponse(
+    override suspend fun storeResponse(
         resource: String,
         idempotencyKey: IdempotencyKey,
         response: ByteArray,
@@ -17,7 +17,7 @@ class InMemoryResponseRepository : IdempotentResponseRepository {
         responses[generateKey(resource, idempotencyKey)] = IdempotencyResponse(isInProgress = false, response = response)
     }
 
-    override fun getResponseOrLock(
+    override suspend fun getResponseOrLock(
         resource: String,
         idempotencyKey: IdempotencyKey,
     ): IdempotencyResponse? {
@@ -30,7 +30,7 @@ class InMemoryResponseRepository : IdempotentResponseRepository {
         return record
     }
 
-    override fun deleteExpiredResponses(lastValidDate: java.time.OffsetDateTime) {
+    override suspend fun deleteExpiredResponses(lastValidDate: java.time.OffsetDateTime) {
         responses.clear()
     }
 

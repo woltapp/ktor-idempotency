@@ -32,6 +32,7 @@ import io.ktor.server.routing.post
 import io.ktor.server.routing.put
 import io.ktor.server.testing.ApplicationTestBuilder
 import io.ktor.server.testing.testApplication
+import io.mockk.coVerify
 import io.mockk.mockk
 import io.mockk.spyk
 import io.mockk.verify
@@ -272,13 +273,13 @@ class IdempotencyPluginTests {
             val response = sendPostRequest(path, idempotencyKey)
             assertOkResponse(response, "Hello, world!")
             assertServiceCalled(timesInTotal = 1)
-            verify(exactly = 1) { repository.storeResponse("POST $path", any(), any()) }
+            coVerify(exactly = 1) { repository.storeResponse("POST $path", any(), any()) }
 
             val response2 = sendPostRequest(path, idempotencyKey)
             assertOkResponse(response2, "Hello, world!")
             assertServiceCalled(timesInTotal = 1)
             // storeResponse should not be called again
-            verify(exactly = 1) { repository.storeResponse("POST $path", any(), any()) }
+            coVerify(exactly = 1) { repository.storeResponse("POST $path", any(), any()) }
         }
 
     @Test
@@ -323,7 +324,7 @@ class IdempotencyPluginTests {
             assertOkResponse(response1, "Hello, world for get request!")
             assertOkResponse(response2, "Hello, world for get request!")
 
-            verify(exactly = 0) { repository.storeResponse(any(), any(), any()) }
+            coVerify(exactly = 0) { repository.storeResponse(any(), any(), any()) }
             assertNoEventTriggered()
             assertServiceCalled(timesInTotal = 2)
         }
@@ -373,7 +374,7 @@ class IdempotencyPluginTests {
             }
         }
 
-    private fun insertExpiredResponse(
+    private suspend fun insertExpiredResponse(
         idempotencyKey: String,
         path: String,
         method: HttpMethod = HttpMethod.Post,
