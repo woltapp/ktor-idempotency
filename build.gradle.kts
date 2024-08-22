@@ -98,7 +98,14 @@ publishing {
     }
 }
 
+val isReleaseVersion = !version.toString().endsWith("-SNAPSHOT")
+
 signing {
+    setRequired {
+        // signing is required if this is a release version and the artifacts are to be published
+        isReleaseVersion && gradle.taskGraph.allTasks.any { it is PublishToMavenRepository }
+    }
+
     val signingKey: String? by project
     val signingPassword: String? by project
     useInMemoryPgpKeys(signingKey, signingPassword)
