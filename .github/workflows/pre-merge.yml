@@ -13,29 +13,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
       - name: Run tests
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: test
+        run: ./gradlew test
   publish:
     name: Check that the publish plugin works
     runs-on: ubuntu-latest
     needs: [tests, lint]
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
       - name: Check that the publish plugin works
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: publishToMavenLocal
+        run: ./gradlew publishToMavenLocal
   lint:
     name: Check that the code is formatted
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
       - name: Check that the code is formatted
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: spotlessCheck
+        run: ./gradlew spotlessCheck
