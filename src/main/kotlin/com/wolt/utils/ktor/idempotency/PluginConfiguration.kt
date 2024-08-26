@@ -46,6 +46,12 @@ class PluginConfiguration {
         )
 
     /**
+     * Flag that controls execution of clean up worker.
+     * Clean up worker is enabled by default, but consider disabling it if your response repository can leverage a built-in expiration mechanism (e.g. Redis key expiration time).
+     */
+    var cleanUpWorkerEnabled = true
+
+    /**
      * The coroutine scope for the worker that cleans up expired responses.
      */
     var cleanUpWorkerScope: CoroutineScope = CoroutineScope(Dispatchers.IO + CoroutineName("idempotencyCleanUpExpiredResponses"))
