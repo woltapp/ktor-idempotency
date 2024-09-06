@@ -21,10 +21,10 @@ A Ktor library to handle idempotency checks for HTTP requests. It ensures the sa
 ### Installation
 
 
-1. Add the dependency to your project. (TODO: After extracting the plugin to a separate repo or publishing it to a artifact repository)
+1. Add the dependency to your project.
+https://mvnrepository.com/artifact/com.wolt/ktor-idempotency
 
-
-2. Add the plugin to your Ktor application.
+3. Add the plugin to your Ktor application.
 
 ```Kotlin
 fun main() {
