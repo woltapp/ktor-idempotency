@@ -18,7 +18,7 @@ java {
 }
 
 dependencies {
-    val ktorVersion = "2.3.11"
+    val ktorVersion = "3.0.0"
     api("io.ktor:ktor-server-core-jvm:${ktorVersion}")
     implementation("io.ktor:ktor-server-netty-jvm:${ktorVersion}")
     implementation("io.ktor:ktor-server-content-negotiation:${ktorVersion}")
