@@ -29,7 +29,7 @@ dependencies {
     testImplementation("io.ktor:ktor-server-status-pages:2.3.11")
     testImplementation("io.ktor:ktor-server-test-host:${ktorVersion}")
 
-    testImplementation("io.mockk:mockk:1.13.11")
+    testImplementation("io.mockk:mockk:1.13.13")
     testImplementation("org.jetbrains.kotlin:kotlin-test")
 }
 
