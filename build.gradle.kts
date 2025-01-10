@@ -18,7 +18,7 @@ java {
 }
 
 dependencies {
-    val ktorVersion = "2.3.11"
+    val ktorVersion = "3.0.2"
     api("io.ktor:ktor-server-core-jvm:${ktorVersion}")
     implementation("io.ktor:ktor-server-netty-jvm:${ktorVersion}")
     implementation("io.ktor:ktor-server-content-negotiation:${ktorVersion}")
@@ -26,7 +26,7 @@ dependencies {
 
     implementation("io.github.oshai:kotlin-logging-jvm:6.0.9")
 
-    testImplementation("io.ktor:ktor-server-status-pages:2.3.11")
+    testImplementation("io.ktor:ktor-server-status-pages:${ktorVersion}")
     testImplementation("io.ktor:ktor-server-test-host:${ktorVersion}")
 
     testImplementation("io.mockk:mockk:1.13.13")
